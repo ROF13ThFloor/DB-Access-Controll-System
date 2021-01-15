@@ -23,9 +23,11 @@ insert into sections values
 (103, 'Subspecialty'),
 (104, 'Emergency'),
 (105, 'Medical'),
-(106, 'Administrative');
+(106, 'Administrative'),
+(201, 'Reports');
 
 insert into nurses values
 (2, 2, 'fateme', 'Rahmani', '127', 101, now(), 25, 10, 'single');
 
-delete from nurses 
+insert into doctors values
+(3, 3, 'mojtaba', 'moazen', '1271', 'general', 101, now(), 25, 10, 'single');

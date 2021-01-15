@@ -99,16 +99,16 @@ CREATE TABLE Patients(
 	registeration_id INT not null PRIMARY key,
 	subject_id int not null references subjects(subject_id),
 	object_id int not null references Objects(object_id),
-	f_name VARCHAR (255) UNIQUE NOT null,
-	l_name VARCHAR (255) UNIQUE NOT null,
-	national_id INT UNIQUE NOT null,
+	f_name VARCHAR (255) NOT null,
+	l_name VARCHAR (255) NOT null,
+	national_id INT NOT null,
 	age INT,
 	sex char(10) check (sex in ('Male', 'Female')),
 	illness VARCHAR (255),
 	section_id INT not null references Sections(section_id),
 	drugs VARCHAR (255),
-	doctor_id INT not null references Doctors(subject_id),
-	nurse_id INT not null references Nurses(subject_id)
+	doctor_id INT references Doctors(subject_id),
+	nurse_id INT references Nurses(subject_id)
 );
 
 create table Section_Manager(
