@@ -1,4 +1,21 @@
 
+-- sync django authentication with our model
+
+create or replace function sync_subject() RETURNS trigger AS $sync$
+BEGIN
+	insert into subjects (subject_id, asl, rsl, wsl) 
+	values (new.id, 'U', 'U', 'U');
+
+	RETURN NEW;  
+END;
+$sync$ LANGUAGE plpgsql;
+
+drop trigger sync on auth_user;
+create trigger sync after insert on auth_user
+    FOR EACH ROW EXECUTE PROCEDURE sync_subject();
+
+
+----------------------------------------------------------------------------------------------
 -- q1
 
 -- Doctor

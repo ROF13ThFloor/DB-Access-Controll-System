@@ -1,4 +1,5 @@
 from django.db import connection
+from django.contrib.auth.models import User
 import traceback
 
 def Login_Query(username, password):
@@ -94,12 +95,14 @@ def register_patient(registeration_id,f_name, l_name, national_id, age, sex,
                      illness, section_id, drugs, doctor_id, nurse_id, user, passw):
     '''Input: patient info
         Output: 0 if successful and 1 otherwise'''
+    user = User.objects.create_user(username=user, password=passw)
+    user.save()
     cursor = connection.cursor()
     success = 0
     try:
         Query = "Call register_patient(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         cursor.execute(Query, (registeration_id, f_name, l_name, national_id, age, sex,
-                               illness, section_id, drugs, doctor_id, nurse_id, user, passw))
+                               illness, section_id, drugs, doctor_id, nurse_id, user.id))
     except:
         # print(traceback.format_exc())
         success = 1

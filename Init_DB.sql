@@ -23,13 +23,11 @@ create table Sections(
 );
 
 create table Subjects(
-	subject_id serial primary key,
+	subject_id int not null primary key,
 	role varchar(10) check (role in ('doctor', 'nurse', 'employee', 'patient')),
 	ASL varchar(5) not null check (ASL in ('TS', 'S', 'C', 'U')), -- Absolute
 	RSL varchar(5) not null check (RSL in ('TS', 'S', 'C', 'U')), -- Read
-	WSL varchar(5) not null check (WSL in ('TS', 'S', 'C', 'U')), -- Write
-	user_name varchar(255) not null,
-	password varchar(255) not null
+	WSL varchar(5) not null check (WSL in ('TS', 'S', 'C', 'U')) -- Write
 );
 
 create table Objects(

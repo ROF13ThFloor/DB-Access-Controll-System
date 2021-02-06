@@ -74,10 +74,9 @@ $$ LANGUAGE plpgsql;
 
 create or replace procedure register_patient(registeration_id INT, f_name varchar(255), l_name varchar(255),
 	national_id INT, age INT, sex char(10), illness VARCHAR (255), section_id INT, drugs VARCHAR (255), 
-	doctor_id INT, nurse_id int, username varchar(255), pass varchar(255))
+	doctor_id INT, nurse_id int, id int)
 as $$
 declare 
-	s int;
 	o int;
 begin 	
 	insert into objects (asl, csl, msl) values ('C', 'S', 'S');
@@ -85,17 +84,17 @@ begin
 
 	insert into object_category (object_id, section_id) values (o, section_id);
 
-	insert into subjects (asl, rsl, wsl, "role", user_name, "password") values ('U', 'U', 'U', 'patient', username, pass);
-	select max(subject_id) into s from subjects;
-
-	insert into subject_category (subject_id, section_id) values (s, section_id);
+	update subjects set "role" = 'patient'
+	where subject_id = id;
+	insert into subject_category (subject_id, section_id) values (id, section_id);
 	
-	insert into patients values (registeration_id, s, o, f_name, l_name, national_id,
+	insert into patients values (registeration_id, id, o, f_name, l_name, national_id,
 	"age", sex, illness, section_id, drugs, doctor_id, nurse_id);
 end
 $$ LANGUAGE plpgsql;
 
 --call register_patient (123, 'name', 'lname', 129, 18, 'Male', 'nothing', 101, 'nothing', 3, 2, 'p1','passp1')
+
 
 
 
