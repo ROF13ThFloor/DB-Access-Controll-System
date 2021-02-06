@@ -100,27 +100,28 @@ $$ LANGUAGE plpgsql;
 -------------------------------------------------------------------------------------------------
 -- Export user data (name)
 
+
+-- drop function export_data(int);
 create or replace function export_data(id int)
-returns table(f_name varchar(255), lname varchar(255)) -- declared a table to extract any other data in need
-as $ex$
+returns table(f_name varchar(255), lname varchar(255))
+as $$
 declare 
-	r int;
+	r varchar(20);
 begin 	
 	select "role" into r from subjects s where s.subject_id = $1;
 	if r = 'doctor' then
-		return query select f_name, l_name from doctors d where d.subject_id = $1;
-	else if r = 'nurse' then
+		return query select d.f_name, d.l_name from doctors d where d.subject_id = $1;
+	elseif r = 'nurse' then
 		return query select f_name, l_name from nurses n where n.subject_id = $1;
-	else if r = 'employee' then
+	elseif r = 'employee' then
 		return query select f_name, l_name from employees e2 where e2.subject_id = $1;
-	else if r = 'patient' then
+	elseif r = 'patient' then
 		return query select f_name, l_name from patients p where p.subject_id = $1;
 	end if;
---	return (null, null);
 end
-$ex$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql;
 
-
+select * from export_data(35)
 
 -------------------------------------------------------------------------------------------------
 -- Access Logging

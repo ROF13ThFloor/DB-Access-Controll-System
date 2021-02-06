@@ -111,6 +111,18 @@ def register_patient(registeration_id,f_name, l_name, national_id, age, sex,
         cursor.close()
         return success
 
+def export_name(subject_id):
+    '''Output: valid targets of this user'''
+    cursor = connection.cursor()
+    result_set = None
+    try:
+        Query = "select * from export_data(%s)"
+        cursor.execute(Query, (subject_id,))
+        result_set = cursor.fetchall()
+    finally:
+        cursor.close()
+        return result_set
+
 def my_privacy(object_id):
     '''Output: Accesses ...'''
     cursor = connection.cursor()
