@@ -56,7 +56,7 @@ CREATE TABLE Doctors(
 	f_name VARCHAR (255) NOT null,
 	l_name VARCHAR (255) NOT null,
 	national_id INT UNIQUE NOT null,
-	specialty VARCHAR (255) NOT null,
+	speciality VARCHAR (255) NOT null,
 	section_id INT not null references sections(section_id),
 	employment_date DATE,
 	age INT,
@@ -72,9 +72,9 @@ CREATE TABLE Nurses(
 	l_name VARCHAR (255) NOT null,
 	national_id INT UNIQUE NOT null,
 	section_id INT not null references sections(section_id),
-	employment_date DATE not null,
+	employment_date DATE,
 	age INT,
-	salary INT not null,
+	salary INT,
 	marital_status char(8) check (marital_status in ('married', 'single'))
 );
 
@@ -85,10 +85,10 @@ CREATE table Employees(
 	f_name VARCHAR (255) NOT null,
 	l_name VARCHAR (255) NOT null,
 	national_id INT UNIQUE NOT null,
-	job VARCHAR (255) NOT null check (job in ('financial', 'official', 'other')),
-	employment_date DATE not null,
+	job VARCHAR (255) NOT null check (job in ('official', 'other')),
+	employment_date DATE,
 	age INT,
-	salary INT not null,
+	salary INT,
 	marital_status char(8) check (marital_status in ('married', 'single'))
 );
 

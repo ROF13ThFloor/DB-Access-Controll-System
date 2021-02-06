@@ -70,7 +70,7 @@ $$ LANGUAGE plpgsql;
 
 
 -------------------------------------------------------------------------------------------------
--- Patient
+-- Patient Registeration
 
 create or replace procedure register_patient(registeration_id INT, f_name varchar(255), l_name varchar(255),
 	national_id INT, age INT, sex char(10), illness VARCHAR (255), section_id INT, drugs VARCHAR (255), 
@@ -97,6 +97,40 @@ $$ LANGUAGE plpgsql;
 
 
 
+-------------------------------------------------------------------------------------------------
+-- Export user data (name)
+
+create or replace function export_data(id int)
+returns table(f_name varchar(255), lname varchar(255)) -- declared a table to extract any other data in need
+as $ex$
+declare 
+	r int;
+begin 	
+	select "role" into r from subjects s where s.subject_id = $1;
+	if r = 'doctor' then
+		return query select f_name, l_name from doctors d where d.subject_id = $1;
+	else if r = 'nurse' then
+		return query select f_name, l_name from nurses n where n.subject_id = $1;
+	else if r = 'employee' then
+		return query select f_name, l_name from employees e2 where e2.subject_id = $1;
+	else if r = 'patient' then
+		return query select f_name, l_name from patients p where p.subject_id = $1;
+	end if;
+--	return (null, null);
+end
+$ex$ LANGUAGE plpgsql;
+
+
+
+-------------------------------------------------------------------------------------------------
+-- Access Logging
+
+create or replace procedure Log_proc()
+as $$
+begin 	
+	
+end
+$$ LANGUAGE plpgsql;
 
 
 
