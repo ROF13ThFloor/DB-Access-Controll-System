@@ -84,7 +84,7 @@ def add_report(subject_id, object_id, detail):
         Query = "Call add_report(%s, %s, %s)"
         cursor.execute(Query, (subject_id, object_id, detail))
     except:
-        # print(traceback.format_exc())
+        print(traceback.format_exc())
         success = 1
         print('bad Query')
     finally:
@@ -128,7 +128,7 @@ def my_privacy(object_id):
     cursor = connection.cursor()
     result_set = None
     try:
-        Query = '''select subject_id, access_type, target from access_log a
+        Query = '''select subject_id, target from access_log a
                     where a.object_id = %s'''
         cursor.execute(Query, (object_id, ))
         result_set = cursor.fetchall()

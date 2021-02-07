@@ -85,7 +85,7 @@ CREATE table Employees(
 	f_name VARCHAR (255) NOT null,
 	l_name VARCHAR (255) NOT null,
 	national_id INT UNIQUE NOT null,
-	job VARCHAR (255) NOT null check (job in ('official', 'other')),
+	job VARCHAR (255) NOT null check (job in ('administrative', 'Inspection', 'other')),
 	employment_date DATE,
 	age INT,
 	salary INT,
@@ -133,13 +133,13 @@ create table Medical_assistant(
 
 create table Target_assignment(
 	target_id serial not null primary key,
-	target_type varchar(20) not null, -- check (target_type in ('')) TODO
+	target_type varchar(255) not null, -- check (target_type in ('')) TODO
 	subject_id int not null references Subjects(subject_id)
 );
 
 create table Object_Targets(
 	target_id serial not null primary key,
-	target_type varchar(20) not null, -- check (target_type in ('')) TODO
+	target_type varchar(255) not null, -- check (target_type in ('')) TODO
 	object_id int not null references Objects(object_id)
 );
 
@@ -154,7 +154,6 @@ create table Access_Log(
 	index serial not null primary key,
 	subject_id INT not null references Subjects(subject_id),
 	object_id int not null references Objects(object_id),
-	access_type varchar(20) check (access_type in ('read', 'write')),
 	target varchar(255)
 );
 
