@@ -39,11 +39,11 @@ BEGIN
 	(default, 'records', new.subject_id);
 
 	insert into object_targets values
-	(default, 'medical_staff_management', new.subject_id),
-	(default, 'bills', new.subject_id),
-	(default, 'annual_report', new.subject_id),
-	(default, 'debt_calculation', new.subject_id),
-	(default, 'report_handling', new.subject_id);
+	(default, 'medical_staff_management', new.object_id),
+	(default, 'bills', new.object_id),
+	(default, 'annual_report', new.object_id),
+	(default, 'debt_calculation', new.object_id),
+	(default, 'report_handling', new.object_id);
 
 	RETURN NEW;  
 END;
@@ -69,15 +69,16 @@ BEGIN
 
 	-- set nurse valid targets
 	insert into target_assignment values 
-	(default, 'patient_care', new.subject_id);
+	(default, 'patient_care', new.subject_id),
+	(default, 'records', new.subject_id);
 
 	insert into object_targets values
-	(default, 'medical_staff_management', new.subject_id),
-	(default, 'bills', new.subject_id),
-	(default, 'annual_report', new.subject_id),
-	(default, 'debt_calculation', new.subject_id),
-	(default, 'give_command', new.subject_id),
-	(default, 'report_handling', new.subject_id);
+	(default, 'medical_staff_management', new.object_id),
+	(default, 'bills', new.object_id),
+	(default, 'annual_report', new.object_id),
+	(default, 'debt_calculation', new.object_id),
+	(default, 'give_command', new.object_id),
+	(default, 'report_handling', new.object_id);
 
 	RETURN NEW;  
 END;
@@ -126,11 +127,11 @@ BEGIN
 	(default, 'debt_calculation', new.subject_id);
 
 	insert into object_targets values
-	(default, 'official_staff_management', new.subject_id),
-	(default, 'bills', new.subject_id),
-	(default, 'annual_report', new.subject_id),
-	(default, 'debt_calculation', new.subject_id),
-	(default, 'report_handling', new.subject_id);
+	(default, 'official_staff_management', new.object_id),
+	(default, 'bills', new.object_id),
+	(default, 'annual_report', new.object_id),
+	(default, 'debt_calculation', new.object_id),
+	(default, 'report_handling', new.object_id);
 
 	RETURN NEW;  
 END;
@@ -179,7 +180,7 @@ BEGIN
 
 	delete from subject_category where subject_id = old.manager_id;
 	insert into subject_category (subject_id, section_id) values
-	(old.manager_id, (select "section" from doctors where subject_id = old.manager_id));
+	(old.manager_id, (select section_id from doctors where subject_id = old.manager_id));
 
 	delete from target_assignment where subject_id = old.manager_id;
 	insert into target_assignment values 
@@ -239,7 +240,7 @@ create trigger del_sysmanager before delete on System_Manager
 
  ----------------------------------------------------------------------------------------------
 -- Section Manager
-create or replace function insert_manager_func() RETURNS trigger AS $insert_sec_manager$
+create or replace function insert_sec_manager_func() RETURNS trigger AS $insert_sec_manager$
 BEGIN
 	update subjects set rsl = 'TS'
 	where subject_id = new.manager_id;
@@ -253,7 +254,7 @@ $insert_sec_manager$ LANGUAGE plpgsql;
 
 -- drop trigger insert_sec_manager on Section_Manager;
 create trigger insert_sec_manager before insert on Section_Manager
-    FOR EACH ROW EXECUTE PROCEDURE insert_manager_func();
+    FOR EACH ROW EXECUTE PROCEDURE insert_sec_manager_func();
 
 --create or replace function del_manager_func() RETURNS trigger AS $del_sec_manager$
 --BEGIN

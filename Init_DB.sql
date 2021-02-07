@@ -85,7 +85,7 @@ CREATE table Employees(
 	f_name VARCHAR (255) NOT null,
 	l_name VARCHAR (255) NOT null,
 	national_id INT UNIQUE NOT null,
-	job VARCHAR (255) NOT null check (job in ('administrative', 'Inspection', 'other')),
+	job VARCHAR (255) NOT null check (job in ('administrative', 'inspection', 'other')),
 	employment_date DATE,
 	age INT,
 	salary INT,

@@ -56,12 +56,20 @@ $$ LANGUAGE plpgsql;
 --drop procedure add_report 
 create or replace procedure add_report(subj_id integer, obj_id integer, detail varchar(255))
 as $$
-begin 
+declare 
+	r varchar(20);
+begin 	
 	insert into objects (asl, csl, msl)
 	select asl, csl, msl from objects o where o.object_id  = obj_id;
 
-	insert into object_category (object_id, section_id)
-	select max(object_id), 201 from objects;		-- 201 is the report section id, change it in the cotext
+	select "role" into r from subjects s where s.subject_id = $1;
+	if r = 'patient' then
+		insert into object_category (object_id, section_id)
+		select max(object_id), 202 from objects;
+	else 
+		insert into object_category (object_id, section_id)
+		select max(object_id), 201 from objects;
+	end if;
 	
 	insert into reports (reporter_id, object_id, detail)
 	select subj_id, max(object_id), detail from objects;
@@ -121,18 +129,7 @@ begin
 end
 $$ LANGUAGE plpgsql;
 
-select * from export_data(35)
-
--------------------------------------------------------------------------------------------------
--- Access Logging
-
-create or replace procedure Log_proc()
-as $$
-begin 	
-	
-end
-$$ LANGUAGE plpgsql;
-
+--select * from export_data(35)
 
 
 
