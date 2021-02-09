@@ -133,7 +133,25 @@ def sentQuery(request):
                     main_Query = re.sub('[;@#$!^&%-]', '', main_Query)
                     Query_response_list = []
                     context = {}
-                    context['colName'] = selected_col
+                    if selected_col[0] == '*':
+                        cols = Queries.culomn_names(select_from)
+                        cols2 = []
+                        for t in cols:
+                            cols2.append(t[0])
+                        modified_select_col = ''
+                        counter = 0
+                        for l in cols2:
+                            counter = counter + 1
+                            if (counter < len(cols2)):
+                                modified_select_col = modified_select_col + l + ','
+                            else:
+                                modified_select_col = modified_select_col + l
+                        if (select_where == ''):
+                            select_where = '1=1'
+                        main_Query = 'select ' + modified_select_col + ' from ' + select_from + ' where ' + select_where
+                        context['colName'] = cols2
+                    else:
+                        context['colName'] = selected_col
                     Query_response_list = Queries.manager_read_query(main_Query)
                     if (Query_response_list == 1):
                         return HttpResponse(error_message % 'Query Syntax Error')
