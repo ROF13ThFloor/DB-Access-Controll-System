@@ -3,7 +3,7 @@ This project is a solution for Acces controll system in the Virtual hospital
 <br/>
 in this project we use different technologies , such as postgress DB , Django framework , Jquery  . 
 <br/>
-in this project we implement a acces controll system for hospital based on mandatory Access controll model , 
+in this project we implements an access controll system for hospital based on mandatory Access controll model , 
 <br/>
 # Mandatory access controll 
 based on the Wikipedia article : 
