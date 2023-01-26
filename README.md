@@ -4,20 +4,26 @@ This is a simple simulation of access control implementation in a hospital. In t
 <br/> 
 
 you can see a schema of databse used in this project: 
-![alt text](4.png)
+<p align="center">
+  <img  src="4.png">
+</p>
 <br/> 
 After user logining in access control system users will be verified by theirs usename and get their roles based in their ID and roles domain in hospital.
-
-![alt text](1.png)
+<p align="center">
+  <img  src="1.png">
+</p>
 <br/> 
 
+<p align="center">
+  <img  src="3.png">
+</p>
 
-![alt text](4.png)
 <br/> 
 
-then each user can make a query, user's query executed based on MAC Policy. It means that Mandatory access control policy dont be violated after execution of query. 
-
-![alt text](3.png)
+Then each user can make a query, user's query is executed based on MAC Policy. It means that the Mandatory access control policy will not be violated after the execution of the query. 
+<p align="center">
+  <img  src="2.png">
+</p>
 
 # What is Mandatory Access Control policy ? 
 based on the Wikipedia article : 
