@@ -37,7 +37,7 @@ Each user can then make a query, which is executed based on the Mandatory Access
 <p align="center">
   <img  src="2.png">
 </p>
-## 
+
 
 
 
